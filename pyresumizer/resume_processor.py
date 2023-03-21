@@ -3,17 +3,24 @@ from pdfminer.pdfinterp import PDFPageInterpreter
 from pdfminer.pdfinterp import PDFResourceManager
 from pdfminer.layout import LAParams
 from pdfminer.pdfpage import PDFPage
+import io
 
 class ResumeProcessor:
     def __init__(self) -> None:
+        '''
+        '''
         pass
 
     def process_resume(self,file_path):
+        '''
+        '''
         data={}
         #Check if file is a pdf / doc and process accordingly.
         return data
 
     def __extract_text_from_pdf(self,pdf_path):
+        '''
+        '''
         text=""
         with open(pdf_path, 'rb') as fh:
             # iterate over all pages of PDF document
@@ -48,4 +55,3 @@ class ResumeProcessor:
                 converter.close()
                 fake_file_handle.close()
             return text
-
