@@ -1,0 +1,1 @@
+from pyresumizer.resume_processor import ResumeProcessor
