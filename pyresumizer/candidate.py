@@ -16,7 +16,7 @@ EDUCATION = [
         ]
 STOPWORDS = set(stopwords.words('english'))
 
-class BasicDetails:
+class Candidate:
     name=""
     phone=""
     email=""
@@ -36,6 +36,7 @@ class BasicDetails:
     
     def __fetch_name(self,resume_data):
         '''
+        TODO : Consider Three Word Names such as Thomas Van Limburg
         '''
         nlp_text = self.nlp(resume_data)
         
@@ -49,17 +50,22 @@ class BasicDetails:
         for match_id, start, end in matches:
             span = nlp_text[start:end]
             return span.text
+        return ""
     
     def __extract_email(self,text):
         '''
         '''
+        result=""
         #Regex for finding email
         email = re.findall("([^@|\s]+@[^@]+\.[^@|\s]+)", text)
         if email:
             try:
-                return email[0].split()[0].strip(';')
+                result=email[0].split()[0].strip(';')
+                if result is None:
+                    result=""
             except IndexError:
-                return None
+                return result
+        return result
             
     def __extract_mobile_number(self,text):
         '''Need to Tweak this
@@ -88,18 +94,23 @@ class BasicDetails:
         skills=list(map(lambda x: str(x).lower(), skills)) # Normalising the Strings to Lower
         
         skillset = []
-        
+
+        #For words like JAVA
         for token in tokens:
             if token.lower() in skills:
                 skillset.append(token)
-        
+    
+        # for the Combined works such as Operating Systems
         for token in nlp_text.noun_chunks:
-            token = token.text.lower().strip() # for the Combined works such as Operating Systems
+            token = token.text.lower().strip() 
             if token in skills:
                 skillset.append(token)
-        
+        #Lets mark it upper
+        skillset=list(map(lambda x: str(x).upper(), skillset))
+        #Remove duplicate skills, if any
+        skillset = set(skillset)
 
-        return [i.capitalize() for i in set([i.lower() for i in skillset])]
+        return skillset
     
     def __extract_education(self,resume_text):
         '''
