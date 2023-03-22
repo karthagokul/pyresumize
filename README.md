@@ -1,5 +1,5 @@
 
-![Alt text](logo.png?raw=true  "Logo")
+![](https://github.com/karthagokul/pyresumize/blob/main/logo.png)
 
 # Introduction
 pyresumize is a python module to extract useful information from resume and generate a json string out of it. Currently it supports only pdf file as input . 
