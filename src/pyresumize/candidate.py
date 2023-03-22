@@ -52,9 +52,9 @@ class Candidate:
         self.education = self.__extract_education(resume_data)
         self.employers = self.__extract_employment(resume_data)
         return True
-    
-    def set_keywords(self,location):
-        self.config_folder=location
+
+    def set_keywords(self, location):
+        self.config_folder = location
 
     def __fetch_name(self, resume_data):
         """
@@ -90,20 +90,9 @@ class Candidate:
 
     def __extract_mobile_number(self, text):
         """Need to Tweak this"""
-        # Need to improve this , I see that some local phones are not captured
-        phone = re.findall(
-            re.compile(
-                r"(?:(?:\+?([1-9]|[0-9][0-9]|[0-9][0-9][0-9])\s*(?:[.-]\s*)?)?(?:\(\s*([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9])\s*\)|([0-9][1-9]|[0-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9]))\s*(?:[.-]\s*)?)?([2-9]1[02-9]|[2-9][02-9]1|[2-9][02-9]{2})\s*(?:[.-]\s*)?([0-9]{4})(?:\s*(?:#|x\.?|ext\.?|extension)\s*(\d+))?"
-            ),
-            text,
-        )
-
-        if phone:
-            number = "".join(phone[0])
-            if len(number) > 10:
-                return "+" + number
-            else:
-                return number
+        phone_results = re.findall(r"[\+\(]?[1-9][0-9 .\-\(\)]{8,}[0-9]", text)
+        phone = ",".join(phone_results)
+        return phone
 
     def __generate_keywords_from_csv_files(self, foldername, csv_column=0):
         keywords = []
