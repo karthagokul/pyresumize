@@ -7,7 +7,7 @@ name =  "pyresumize"
 authors = [
     {name = "Gokul Kartha", email = "kartha.gokul@gmail.com"},
 ]
-description = "Sample Python Project for creating a new Python Module"
+description = "Resume Parser Written in Python3"
 readme = "README.md"
 classifiers = [
     "Development Status :: 3 - Alpha",
@@ -47,9 +47,9 @@ test = [
 ]
 
 [project.urls]
-Documentation = "https://github.com/microsoft/python-package-template/tree/main#readme"
-Source = "https://github.com/microsoft/python-package-template"
-Tracker = "https://github.com/microsoft/python-package-template/issues"
+Documentation = "https://github.com/karthagokul/pyresumize#readme"
+Source = "https://github.com/karthagokul/pyresumize"
+Tracker = "https://github.com/karthagokul/pyresumize/issues"
 
 [tool.flit.module]
 name = "pyresumize"
