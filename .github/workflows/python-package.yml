@@ -37,5 +37,6 @@ jobs:
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Test with pytest
       run: |
-        echo -e "import nltk\nnltk.download('stopwords')\nimport spacy.cli\nspacy.cli.download("en_core_web_lg")" | python
+        echo -e "import nltk\nnltk.download('stopwords')" | python
+        echo -e "import spacy.cli\nspacy.cli.download("en_core_web_lg")" | python
         pytest tests
