@@ -20,7 +20,7 @@ class ResumeProcessor:
         """ """
         pass
 
-    def set_custom_keywords_folder(self,folder_name):
+    def set_custom_keywords_folder(self, folder_name):
         self.candidate.set_keywords(folder_name)
 
     def __generate_json(self):

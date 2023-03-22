@@ -17,7 +17,7 @@ def find_ext(dr, ext):
 r_parser = ResumeProcessor()
 r_parser.set_custom_keywords_folder("data")
 # Lets find the files from a folder of .pdf extension
-files = find_ext(".test_data", "pdf")
+files = find_ext(".test_data/", "pdf")
 for file in files:
     print("Parsing " + file)
     json = r_parser.process_resume(file)

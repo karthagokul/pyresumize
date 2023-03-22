@@ -16,14 +16,14 @@ class Emailesting(TestCase):
         _test_candidate = self._test_candidate
         # Since its a private method
         # Invalid Emails
-        result = _test_candidate._Candidate__extract_email("@karthagokul")
+        result = _test_candidate._Candidate__extract_email("@karthakul")
         self.assertEqual("", result)
-        result = _test_candidate._Candidate__extract_email("karthagokul@gmailcom")
+        result = _test_candidate._Candidate__extract_email("karth@gmailcom")
         self.assertEqual("", result)
         result = _test_candidate._Candidate__extract_email("")
         self.assertEqual("", result)
         # valid One
-        result = _test_candidate._Candidate__extract_email("karthagokul@gmail.com")
-        self.assertEqual("karthagokul@gmail.com", result)
+        result = _test_candidate._Candidate__extract_email("gokul@gmail.com")
+        self.assertEqual("gokul@gmail.com", result)
         result = _test_candidate._Candidate__extract_email("karthagokul@yahoo.co.ca")
         self.assertEqual("karthagokul@yahoo.co.ca", result)
