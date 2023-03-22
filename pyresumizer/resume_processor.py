@@ -6,6 +6,10 @@ from pdfminer.pdfpage import PDFPage
 import io
 from pyresumizer.candidate import Candidate
 
+#See if this need to be done in another place, performance improvements.
+import nltk
+nltk.download('stopwords')
+
 class ResumeProcessor:
     candidate=Candidate()
     def __init__(self) -> None:
