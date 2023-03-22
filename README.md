@@ -12,7 +12,9 @@ pyresumize is a python module to extract useful information from resume and gene
 * Custom configuration of input data
 
 ## Usage
-
+    python -m spacy download en_core_web_sm
+    python -m nltk.downloader words
+    python -m nltk.downloader stopwords
     from  pyresumize  import ResumeProcessor
     r_parser=ResumeProcessor()
     json=r_parser.process_resume(file)
