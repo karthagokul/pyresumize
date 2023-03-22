@@ -1,4 +1,3 @@
-
 from  pyresumizer.candidate import Candidate
 
 from unittest import TestCase
