@@ -4,27 +4,32 @@ from pdfminer.pdfinterp import PDFResourceManager
 from pdfminer.layout import LAParams
 from pdfminer.pdfpage import PDFPage
 import io
-from pyresumizer.basic_details import BasicDetails
+from pyresumizer.candidate import Candidate
+
+#TODO , See if this need to be done in another place, performance improvements.
+import nltk
+nltk.download('stopwords')
+#TODO End
 
 class ResumeProcessor:
-    basic_details=BasicDetails()
+    candidate=Candidate()
     def __init__(self) -> None:
         """ """
         pass
 
+    def __generate_json(self):
+        json_data={}
+        json_data["basic_details"]=self.candidate.personal_details
+        json_data["skills"]=self.candidate.skills
+        json_data["education"]=self.candidate.education
+        return json_data
+
+
     def process_resume(self, file_path):
         """ """
         text=self.__extract_text_from_pdf(file_path)
-        self.basic_details.process(text)
-        print("Basic Details")
-        print(self.basic_details.personal_details["name"])
-        print(self.basic_details.personal_details["phone"])
-        print(self.basic_details.personal_details["email"])
-        print("Skills")
-        print(self.basic_details.skills)
-        print("Education")
-        print(self.basic_details.education)
-        data = {}
+        self.candidate.process(text)
+        data = self.__generate_json()
         # Check if file is a pdf / doc and process accordingly.
         return data
 

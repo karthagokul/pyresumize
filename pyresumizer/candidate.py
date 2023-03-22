@@ -3,10 +3,11 @@ import spacy
 from spacy.matcher import Matcher
 import re
 import pandas as pdas
-
+import os
 import re
 import spacy
 from nltk.corpus import stopwords
+
 
 EDUCATION = [
             'BE','B.E.', 'B.E', 'BS', 'B.S', 
@@ -16,7 +17,7 @@ EDUCATION = [
         ]
 STOPWORDS = set(stopwords.words('english'))
 
-class BasicDetails:
+class Candidate:
     name=""
     phone=""
     email=""
@@ -36,6 +37,7 @@ class BasicDetails:
     
     def __fetch_name(self,resume_data):
         '''
+        TODO : Consider Three Word Names such as Thomas Van Limburg
         '''
         nlp_text = self.nlp(resume_data)
         
@@ -49,17 +51,22 @@ class BasicDetails:
         for match_id, start, end in matches:
             span = nlp_text[start:end]
             return span.text
+        return ""
     
     def __extract_email(self,text):
         '''
         '''
+        result=""
         #Regex for finding email
         email = re.findall("([^@|\s]+@[^@]+\.[^@|\s]+)", text)
         if email:
             try:
-                return email[0].split()[0].strip(';')
+                result=email[0].split()[0].strip(';')
+                if result is None:
+                    result=""
             except IndexError:
-                return None
+                return result
+        return result
             
     def __extract_mobile_number(self,text):
         '''Need to Tweak this
@@ -73,6 +80,7 @@ class BasicDetails:
                 return '+' + number
             else:
                 return number
+
             
     def __extract_skills(self,resume_text):
         '''
@@ -80,26 +88,32 @@ class BasicDetails:
         nlp_text = self.nlp(resume_text)
 
         tokens = [token.text for token in nlp_text if not token.is_stop]
-        
-        df = pdas.read_csv("data\it_job_skills.csv",skiprows=1)
+        conf_file=os.path.realpath("data/it_job_skills.csv")
+        #print("reading " +conf_file)
+        df = pdas.read_csv(conf_file,skiprows=1)
         ## Assumes that the first column is full of skills :)
         matrix2 = df[df.columns[0]].to_numpy()
         skills = matrix2.tolist()
         skills=list(map(lambda x: str(x).lower(), skills)) # Normalising the Strings to Lower
         
         skillset = []
-        
+
+        #For words like JAVA
         for token in tokens:
             if token.lower() in skills:
                 skillset.append(token)
-        
+    
+        # for the Combined works such as Operating Systems
         for token in nlp_text.noun_chunks:
-            token = token.text.lower().strip() # for the Combined works such as Operating Systems
+            token = token.text.lower().strip() 
             if token in skills:
                 skillset.append(token)
-        
+        #Lets mark it lower
+        skillset=list(map(lambda x: str(x).lower(), skillset))
+        #Remove duplicate skills, if any
+        skillset = set(skillset)
 
-        return [i.capitalize() for i in set([i.lower() for i in skillset])]
+        return skillset
     
     def __extract_education(self,resume_text):
         '''
@@ -109,12 +123,16 @@ class BasicDetails:
 
         degrees = {}
 
+        #Lets search for Single words like BE
         for index, text in enumerate(_text):
             for tex in text.split():
                 # Replace all special symbols
                 tex = re.sub(r'[?|$|.|!|,]', r'', tex)
                 if tex.upper() in EDUCATION and tex not in STOPWORDS:
                     degrees[tex] = text + _text[index + 1]
+        #Now Lets search Longer word like Bachelor of Technology
+        # for the Combined works such as Operating Systems
+        #TODO , Use Noun Chunks
 
         education_map = []
         for key in degrees.keys():
@@ -133,8 +151,9 @@ class BasicDetails:
         nlp_text = self.nlp(resume_text)
 
         tokens = [token.text for token in nlp_text if not token.is_stop]
-        
-        df = pdas.read_csv(r"data/indian_universities.csv",skiprows=1)
+        conf_file=os.path.realpath(r"data/it_job_skills.csv")
+        #print("reading " +conf_file)
+        df = pdas.read_csv(conf_file,skiprows=1)
         #Hardcoding for now , testing purpose
         matrix2 = df[df.columns[0]].to_numpy()
         universities = matrix2.tolist()
