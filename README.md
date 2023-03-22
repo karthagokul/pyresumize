@@ -10,6 +10,8 @@ pyresumize is a python module to extract useful information from resume and gene
 * Performance Improvements
 * Bug Fixes
 * Custom configuration of input data
+### Note
+The Skills , Employers and Education is given as .csv inputs to the engine and you can see a reference implementation in the data folder.
 
 ## Usage
     python -m spacy download en_core_web_sm

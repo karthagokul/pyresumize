@@ -52,6 +52,9 @@ class Candidate:
         self.education = self.__extract_education(resume_data)
         self.employers = self.__extract_employment(resume_data)
         return True
+    
+    def set_keywords(self,location):
+        self.config_folder=location
 
     def __fetch_name(self, resume_data):
         """
