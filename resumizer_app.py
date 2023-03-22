@@ -5,6 +5,10 @@ from pyresumize.resume_processor import ResumeProcessor
 from os import path
 from glob import glob
 
+# Lets download programtically if needed when deploy as service
+# import spacy.cli
+# spacy.cli.download("en_core_web_lg")
+
 
 def find_ext(dr, ext):
     return glob(path.join(dr, "*." + ext))
