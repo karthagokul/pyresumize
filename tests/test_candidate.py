@@ -37,7 +37,7 @@ class Emailesting(TestCase):
        #valid One
        result=_test_candidate._Candidate__fetch_name("Gokul Kartha karthagokul@gmail.com")
        self.assertEqual("Gokul Kartha",result)
-       #Todo 
+       #Todo
        #result=_test_candidate._Candidate__fetch_name("Gokul S kartha")
        #self.assertEqual("Gokul S kartha",result)
        
