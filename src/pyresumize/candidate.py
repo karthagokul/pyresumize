@@ -90,8 +90,8 @@ class Candidate:
 
     def __extract_mobile_number(self, text):
         """Need to Tweak this"""
-        phone_results = re.findall(r"[\+\(]?[1-9][0-9 .\-\(\)]{8,}[0-9]", text)
-        phone = ",".join(phone_results)
+        results = set(re.findall(r"[\+\(]?[1-9][0-9 .\-\(\)]{8,}[0-9]", text))
+        phone = ",".join(results)
         return phone
 
     def __generate_keywords_from_csv_files(self, foldername, csv_column=0):
