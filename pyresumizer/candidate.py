@@ -3,7 +3,7 @@ import spacy
 from spacy.matcher import Matcher
 import re
 import pandas as pdas
-
+import os
 import re
 import spacy
 from nltk.corpus import stopwords
@@ -80,6 +80,7 @@ class Candidate:
                 return '+' + number
             else:
                 return number
+
             
     def __extract_skills(self,resume_text):
         '''
@@ -87,8 +88,9 @@ class Candidate:
         nlp_text = self.nlp(resume_text)
 
         tokens = [token.text for token in nlp_text if not token.is_stop]
-        
-        df = pdas.read_csv("data\it_job_skills.csv",skiprows=1)
+        conf_file=os.path.realpath("data/it_job_skills.csv")
+        #print("reading " +conf_file)
+        df = pdas.read_csv(conf_file,skiprows=1)
         ## Assumes that the first column is full of skills :)
         matrix2 = df[df.columns[0]].to_numpy()
         skills = matrix2.tolist()
@@ -106,8 +108,8 @@ class Candidate:
             token = token.text.lower().strip() 
             if token in skills:
                 skillset.append(token)
-        #Lets mark it upper
-        skillset=list(map(lambda x: str(x).upper(), skillset))
+        #Lets mark it lower
+        skillset=list(map(lambda x: str(x).lower(), skillset))
         #Remove duplicate skills, if any
         skillset = set(skillset)
 
@@ -121,12 +123,16 @@ class Candidate:
 
         degrees = {}
 
+        #Lets search for Single words like BE
         for index, text in enumerate(_text):
             for tex in text.split():
                 # Replace all special symbols
                 tex = re.sub(r'[?|$|.|!|,]', r'', tex)
                 if tex.upper() in EDUCATION and tex not in STOPWORDS:
                     degrees[tex] = text + _text[index + 1]
+        #Now Lets search Longer word like Bachelor of Technology
+        # for the Combined works such as Operating Systems
+        #TODO , Use Noun Chunks
 
         education_map = []
         for key in degrees.keys():
@@ -145,8 +151,9 @@ class Candidate:
         nlp_text = self.nlp(resume_text)
 
         tokens = [token.text for token in nlp_text if not token.is_stop]
-        
-        df = pdas.read_csv(r"data/indian_universities.csv",skiprows=1)
+        conf_file=os.path.realpath(r"data/it_job_skills.csv")
+        #print("reading " +conf_file)
+        df = pdas.read_csv(conf_file,skiprows=1)
         #Hardcoding for now , testing purpose
         matrix2 = df[df.columns[0]].to_numpy()
         universities = matrix2.tolist()
