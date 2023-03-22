@@ -1,3 +1,7 @@
+import sys
+
+sys.path.append("src")
+from pyresumize.resume_processor import ResumeProcessor
 from pyresumize.candidate import Candidate
 
 from unittest import TestCase

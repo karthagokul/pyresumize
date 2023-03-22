@@ -9,6 +9,7 @@ pyresumize is a python module to extract useful information from resume and gene
 * Support for other formats
 * Performance Improvements
 * Bug Fixes
+* Custom configuration of input data
 
 ## Usage
 
@@ -17,14 +18,3 @@ pyresumize is a python module to extract useful information from resume and gene
     json=r_parser.process_resume(file)
     print(json)
 
- 
-
-##### Developer Notes
-
-To Run the unit tests
-
-python -m unittest discover tests\ -vvv
-
-python -m build
-
-twine upload -r pyresumize dist\* --config-file "C:\Users\Gokul Kartha\.pypirc" --repository pypi

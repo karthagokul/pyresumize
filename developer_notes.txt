@@ -1,0 +1,10 @@
+
+##### Developer Notes
+
+To Run the unit tests
+
+python -m unittest discover tests\ -vvv
+
+python -m build
+
+twine upload -r pyresumize dist\* --config-file "C:\Users\Gokul Kartha\.pypirc" --repository pypi
