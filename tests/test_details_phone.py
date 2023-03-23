@@ -26,6 +26,10 @@ class Phoneesting(TestCase):
         result = _test_candidate._Candidate__extract_mobile_number("+919562099376")
         self.assertEqual("+919562099376", result)
 
+        # Duplicate number case
+        result = _test_candidate._Candidate__extract_mobile_number("+919562099376 Again My Number +919562099376")
+        self.assertEqual("+919562099376", result)
+
         # Invalid one
         result = _test_candidate._Candidate__extract_mobile_number("")
         self.assertEqual("", result)
