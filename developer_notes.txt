@@ -11,3 +11,8 @@ twine upload -r pyresumize dist\* --config-file "C:\Users\Gokul Kartha\.pypirc" 
 
 ## generate class diagram
 pyreverse -o png -p pyresumize src\pyresumize
+
+
+# Lets download programtically if needed when deploy as service
+# import spacy.cli
+# spacy.cli.download("en_core_web_lg")

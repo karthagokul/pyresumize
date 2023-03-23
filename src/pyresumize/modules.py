@@ -75,7 +75,8 @@ class EducationStandardEngine(EducationBaseInterface):
                 # Replace all special symbols
                 tex = re.sub(r"[?|$|.|!|,]", r"", tex)
                 if tex.upper() in EDUCATION and tex not in STOPWORDS:
-                    degrees[tex] = text + _text[index + 1]
+                    if len(_text) > index + 1:
+                        degrees[tex] = text + _text[index + 1]
         # Now Lets search Longer word like Bachelor of Technology
         # for the Combined works such as Operating Systems
         # TODO , Use Noun Chunks
