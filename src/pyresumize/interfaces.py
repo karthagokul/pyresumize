@@ -1,4 +1,6 @@
 class EmployerBaseInterface:
+    """Idenify the previous employers"""
+
     def __init__(self, config_folder) -> None:
         self.config_folder = config_folder
         pass
@@ -9,6 +11,8 @@ class EmployerBaseInterface:
 
 
 class EducationBaseInterface:
+    """Interface to fetch the education , graduation year and university"""
+
     def __init__(self, config_folder) -> None:
         self.config_folder = config_folder
         pass
@@ -19,6 +23,8 @@ class EducationBaseInterface:
 
 
 class EmailBaseInterface:
+    """Interface to parse the Email address"""
+
     def __init__(self, config_folder) -> None:
         self.config_folder = config_folder
         pass
@@ -29,6 +35,8 @@ class EmailBaseInterface:
 
 
 class PhoneBaseInterface:
+    """Interface to parse Phone number from resume"""
+
     def __init__(self, config_folder) -> None:
         self.config_folder = config_folder
         pass
@@ -39,6 +47,8 @@ class PhoneBaseInterface:
 
 
 class NameBaseInterface:
+    """Interface to parse the name in the resume"""
+
     def __init__(self, config_folder) -> None:
         self.config_folder = config_folder
         pass
@@ -49,6 +59,8 @@ class NameBaseInterface:
 
 
 class SkillBaseInterface:
+    """Interface to parse the Skills in a resume"""
+
     def __init__(self, config_folder) -> None:
         self.config_folder = config_folder
         pass

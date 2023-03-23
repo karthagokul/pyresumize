@@ -25,7 +25,8 @@ dependencies = [
     "spacy==3.5.1",
     "pdfminer.six==20221105",
     "pandas==1.5.3",
-    "nltk==3.8.1"
+    "nltk==3.8.1",
+    "click"
 ]
 [project.optional-dependencies]
 spark = [
@@ -48,7 +49,9 @@ test = [
     "pytest-runner",
     "pytest==7.2.2",
     "pytest-github-actions-annotate-failures",
-    "shellcheck-py==0.9.0.2"
+    "shellcheck-py==0.9.0.2",
+    "psutil",
+    "twine"
 ]
 
 [project.urls]
