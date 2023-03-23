@@ -14,10 +14,8 @@ from pyresumize.modules import (
     PhoneStandardEngine,
     EmailStandardEngine,
     EducationStandardEngine,
-    EmployerStandardEngine
+    EmployerStandardEngine,
 )
-
-
 
 
 class Candidate:

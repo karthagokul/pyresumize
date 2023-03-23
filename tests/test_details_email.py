@@ -1,8 +1,8 @@
 import sys
 
 sys.path.append("src")
-from pyresumize.resume_processor import ResumeProcessor
-from pyresumize.candidate import Candidate
+import spacy
+from pyresumize.modules import EmailStandardEngine
 
 from unittest import TestCase
 
@@ -10,20 +10,20 @@ from unittest import TestCase
 class Emailesting(TestCase):
     def __init__(self, methodName: str = "runTest") -> None:
         super().__init__(methodName)
-        self._test_candidate = Candidate()
 
     def test_email(self):
-        _test_candidate = self._test_candidate
+        self.nlp = spacy.load("en_core_web_sm")
+        engine = EmailStandardEngine(self.nlp)
         # Since its a private method
         # Invalid Emails
-        result = _test_candidate._Candidate__extract_email("@karthakul")
+        result = engine.process("@karthakul")
         self.assertEqual("", result)
-        result = _test_candidate._Candidate__extract_email("karth@gmailcom")
+        result = engine.process("karth@gmailcom")
         self.assertEqual("", result)
-        result = _test_candidate._Candidate__extract_email("")
+        result = engine.process("")
         self.assertEqual("", result)
         # valid One
-        result = _test_candidate._Candidate__extract_email("gokul@gmail.com")
+        result = engine.process("gokul@gmail.com")
         self.assertEqual("gokul@gmail.com", result)
-        result = _test_candidate._Candidate__extract_email("karthagokul@yahoo.co.ca")
+        result = engine.process("karthagokul@yahoo.co.ca")
         self.assertEqual("karthagokul@yahoo.co.ca", result)

@@ -8,14 +8,17 @@ from nltk.corpus import stopwords
 from os import path
 from glob import glob
 import nltk
+
 # TODO , See if this need to be done in another place, performance improvements.
 nltk.download("stopwords")
 # TODO End
-config_folder="data"
+config_folder = "data"
+
 
 def set_config_folder(new_location):
     global config_folder
-    config_folder=new_location
+    config_folder = new_location
+
 
 from pyresumize.interfaces import (
     EducationBaseInterface,
@@ -55,7 +58,7 @@ STOPWORDS = set(stopwords.words("english"))
 
 
 class EducationStandardEngine(EducationBaseInterface):
-    def __init__(self,nlp) -> None:
+    def __init__(self, nlp) -> None:
         super().__init__(config_folder)
         self.nlp = nlp
         pass
@@ -98,7 +101,7 @@ class EducationStandardEngine(EducationBaseInterface):
 
         tokens = [token.text for token in nlp_text if not token.is_stop]
         universities_input_folder = os.path.join(self.config_folder, "universities")
-        utils=Utilities()
+        utils = Utilities()
         universities = utils.generate_keywords_from_csv_files(universities_input_folder)
         universities = list(map(lambda x: str(x).lower(), universities))  # Normalising the Strings to Lower
 
@@ -145,9 +148,9 @@ class NameStandardEngine(NameBaseInterface):
 
 
 class EmployerStandardEngine(EmployerBaseInterface):
-    def __init__(self,nlp) -> None:
+    def __init__(self, nlp) -> None:
         super().__init__(config_folder)
-        self.nlp=nlp
+        self.nlp = nlp
         pass
 
     def process(self, extracted_text):
@@ -157,7 +160,7 @@ class EmployerStandardEngine(EmployerBaseInterface):
 
         tokens = [token.text for token in nlp_text if not token.is_stop]
         employ_input_folder = os.path.join(self.config_folder, "employers")
-        utils=Utilities()
+        utils = Utilities()
         employers = utils.generate_keywords_from_csv_files(employ_input_folder)
         employers = list(map(lambda x: str(x).lower(), employers))  # Normalising the Strings to Lower
 
@@ -184,7 +187,7 @@ class SkillStandardEngine(SkillBaseInterface):
         # Iterate through the skills csvs and build info
 
         skills_input_folder = os.path.join(self.config_folder, "skills")
-        utils=Utilities()
+        utils = Utilities()
         skills = utils.generate_keywords_from_csv_files(skills_input_folder)
         skills = list(map(lambda x: str(x).lower(), skills))  # Normalising the Strings to Lower
 
@@ -209,7 +212,7 @@ class SkillStandardEngine(SkillBaseInterface):
 
 
 class EmailStandardEngine(EmailBaseInterface):
-    def __init__(self,nlp) -> None:
+    def __init__(self, nlp) -> None:
         super().__init__(config_folder)
         self.nlp = nlp
         pass
