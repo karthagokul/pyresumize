@@ -4,24 +4,63 @@ from pdfminer.pdfinterp import PDFResourceManager
 from pdfminer.layout import LAParams
 from pdfminer.pdfpage import PDFPage
 import io
-from pyresumize.candidate import Candidate
+import spacy
+from spacy.matcher import Matcher
+import os
+import pyresumize.modules as modules
+from pyresumize.modules import (
+    SkillStandardEngine,
+    NameStandardEngine,
+    PhoneStandardEngine,
+    EmailStandardEngine,
+    EducationStandardEngine,
+    EmployerStandardEngine
+)
 
-# TODO , See if this need to be done in another place, performance improvements.
-import nltk
-
-nltk.download("stopwords")
-# TODO End
 
 
-class ResumeProcessor:
-    candidate = Candidate()
 
+class Candidate:
+    name = ""
+    phone = ""
+    email = ""
+    personal_details = {}
+    skills = []
+    education = {}
+    employers = []
+
+
+class ResumeEngine:
     def __init__(self) -> None:
-        """ """
-        pass
+        self.nlp = spacy.load("en_core_web_sm")
+        self.candidate = Candidate()
+        self.name_engine = NameStandardEngine(self.nlp)
+        self.skills_engine = SkillStandardEngine(self.nlp)
+        self.phone_engine = PhoneStandardEngine(self.nlp)
+        self.email_engine = EmailStandardEngine(self.nlp)
+        self.education_engine = EducationStandardEngine(self.nlp)
+        self.employer_engine = EmployerStandardEngine(self.nlp)
+
+    def set_skills_engine(self, engine):
+        self.skills_engine = engine
+
+    def set_name_engine(self, engine):
+        self.name_engine = engine
+
+    def set_name_engine(self, engine):
+        self.phone_engine = engine
+
+    def set_email_engine(self, engine):
+        self.email_engine = engine
+
+    def set_education_engine(self, engine):
+        self.education_engine = engine
+
+    def set_employer_engine(self, engine):
+        self.employer_engine = engine
 
     def set_custom_keywords_folder(self, folder_name):
-        self.candidate.set_keywords(folder_name)
+        modules.set_config_folder(folder_name)
 
     def __generate_json(self):
         json_data = {}
@@ -33,8 +72,13 @@ class ResumeProcessor:
 
     def process_resume(self, file_path):
         """ """
-        text = self.__extract_text_from_pdf(file_path)
-        self.candidate.process(text)
+        resume_data = self.__extract_text_from_pdf(file_path)
+        self.candidate.name = self.name_engine.process(resume_data)
+        self.candidate.skills = self.skills_engine.process(resume_data)
+        self.candidate.personal_details["phone"] = self.phone_engine.process(resume_data)
+        self.candidate.personal_details["email"] = self.email_engine.process(resume_data)
+        self.candidate.education = self.education_engine.process(resume_data)
+
         data = self.__generate_json()
         # Check if file is a pdf / doc and process accordingly.
         return data
