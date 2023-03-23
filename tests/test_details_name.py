@@ -1,29 +1,28 @@
 import sys
 
 sys.path.append("src")
-from pyresumize.resume_processor import ResumeProcessor
-from pyresumize.candidate import Candidate
-
+import spacy
+from pyresumize.modules import NameStandardEngine
 from unittest import TestCase
 
 
 class Nameesting(TestCase):
     def __init__(self, methodName: str = "runTest") -> None:
         super().__init__(methodName)
-        self._test_candidate = Candidate()
 
     def test_name(self):
-        _test_candidate = self._test_candidate
+        self.nlp = spacy.load("en_core_web_sm")
+        engine = NameStandardEngine(self.nlp)
         # Since its a private method
-        result = _test_candidate._Candidate__fetch_name("I am Working")
+        result = engine.process("I am Working")
         self.assertEqual("", result)
-        result = _test_candidate._Candidate__fetch_name("Eindhoven is a city in Netherlands")
+        result = engine.process("Eindhoven is a city in Netherlands")
         self.assertEqual("", result)
-        result = _test_candidate._Candidate__fetch_name("")
+        result = engine.process("")
         self.assertEqual("", result)
         # valid One
-        result = _test_candidate._Candidate__fetch_name("Gokul Kartha karthagokul@gmail.com")
+        result = engine.process("Gokul Kartha karthagokul@gmail.com")
         self.assertEqual("Gokul Kartha", result)
         # Todo
-        # result=_test_candidate._Candidate__fetch_name("Gokul S kartha")
+        # result=engine.process("Gokul S kartha")
         # self.assertEqual("Gokul S kartha",result)

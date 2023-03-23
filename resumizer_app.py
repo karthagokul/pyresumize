@@ -1,7 +1,7 @@
 import sys
 
 sys.path.append("src")
-from pyresumize.resume_processor import ResumeProcessor
+from pyresumize.resume_processor import ResumeEngine
 from os import path
 from glob import glob
 
@@ -14,7 +14,7 @@ def find_ext(dr, ext):
     return glob(path.join(dr, "*." + ext))
 
 
-r_parser = ResumeProcessor()
+r_parser = ResumeEngine()
 r_parser.set_custom_keywords_folder("data")
 # Lets find the files from a folder of .pdf extension
 files = find_ext(".test_data/", "pdf")
