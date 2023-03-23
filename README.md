@@ -13,7 +13,7 @@ pyresumize is a python module to extract useful information from resume and gene
 
 ### Todo
 
-* Implement a Skill Fetcher
+* Proper Logging to be added
 * Support for other formats
 * Performance Improvements 
 * Bug Fixes

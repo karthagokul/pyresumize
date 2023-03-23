@@ -3,15 +3,17 @@ import os
 from os import path
 from glob import glob
 import signal
-import concurrent.futures
 
 sys.path.append("src")
 from pyresumize.resume_processor import ResumeEngine
-import sys
 
+
+# Profiling import
 from time import time
 from functools import wraps
 import platform, socket, re, uuid, json, psutil, logging
+
+# Profile over
 
 
 # Functions For Profiling
@@ -42,7 +44,6 @@ def simple_time_tracker(log_fun):
         @wraps(fn)
         def wrapped_fn(*args, **kwargs):
             start_time = time()
-
             try:
                 result = fn(*args, **kwargs)
             finally:
@@ -64,7 +65,6 @@ def simple_time_tracker(log_fun):
 
 
 def process_resume(file_name):
-    print("Processing " + file_name)
     r_parser = ResumeEngine()
     r_parser.set_custom_keywords_folder("data")
     return r_parser.process_resume(file_name)
@@ -91,23 +91,12 @@ def main():
         sys.exit(-1)
     foldername = str(sys.argv[1])
     files = find_ext(foldername, ".pdf")
-
-    # Lets use a thread pool to process parallelly
-    with concurrent.futures.ThreadPoolExecutor(max_workers=5) as executor:
-        # Start the load operations and mark each future with its URL
-        future_to_json = {executor.submit(process_resume, file): file for file in files}
-        for future in concurrent.futures.as_completed(future_to_json):
-            url = future_to_json[future]
-            try:
-                data = future.result()
-            except Exception as exc:
-                print("%r generated an exception: %s" % (url, exc))
-            else:
-                print("%r" % (data))
-                print("")
-
-    print("\n\n **** SUMMARY **** ")
-    print("Total processed files : %d" % len(files))
+    counter = 0
+    for file in files:
+        counter += 1
+        print("\n[%d/%d] Filename: %s " % (counter, len(files), file))
+        result = process_resume(file)
+        print(result)
 
 
 if __name__ == "__main__":

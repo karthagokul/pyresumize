@@ -56,6 +56,11 @@ EDUCATION = [
 ]
 STOPWORDS = set(stopwords.words("english"))
 
+"""
+Below Modules are standard implementations of the respective interfaces
+The developer of the library can extend the functionality as in needed by pluggin in a custom module
+"""
+
 
 class EducationStandardEngine(EducationBaseInterface):
     def __init__(self, nlp) -> None:

@@ -7,6 +7,7 @@ import io
 import spacy
 from spacy.matcher import Matcher
 import os
+from pyresumize.utilities import Utilities
 import pyresumize.modules as modules
 from pyresumize.modules import (
     SkillStandardEngine,
@@ -19,6 +20,10 @@ from pyresumize.modules import (
 
 
 class Candidate:
+    """The Person Class who owns the given resume
+    The Extracted data is encapsulated in this class
+    """
+
     name = ""
     phone = ""
     email = ""
@@ -29,6 +34,8 @@ class Candidate:
 
 
 class ResumeEngine:
+    """The GodFather Class with the API interface"""
+
     def __init__(self) -> None:
         self.nlp = spacy.load("en_core_web_sm")
         self.candidate = Candidate()
@@ -61,6 +68,9 @@ class ResumeEngine:
         modules.set_config_folder(folder_name)
 
     def __generate_json(self):
+        """
+        Generates the respective json format of the resume
+        """
         json_data = {}
         json_data["basic_details"] = self.candidate.personal_details
         json_data["skills"] = self.candidate.skills
@@ -68,9 +78,20 @@ class ResumeEngine:
         json_data["employers"] = self.candidate.employers
         return json_data
 
+    def check_file_sanity(self, file_path):
+        """
+        Utility function to check if the file given is valid
+        """
+        return self.__extract_text_from_pdf(file_path)
+
     def process_resume(self, file_path):
-        """ """
+        """
+        The Worker API !
+        """
         resume_data = self.__extract_text_from_pdf(file_path)
+        if resume_data is None:
+            util = Utilities()
+            return util.error_handler("File %s Can not be opened" % (file_path))
         self.candidate.name = self.name_engine.process(resume_data)
         self.candidate.skills = self.skills_engine.process(resume_data)
         self.candidate.personal_details["phone"] = self.phone_engine.process(resume_data)
@@ -95,7 +116,9 @@ class ResumeEngine:
                     page_interpreter.process_page(page)
                     text += fake_file_handle.getvalue()
                     fake_file_handle.close()
-        except IOError:
-            print("File Open Error")
+        except:
+            # print("Unable to Process file %s"%pdf_path)
+            # Any parsing failure we handle here .
+            return None
 
         return text
