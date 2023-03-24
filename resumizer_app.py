@@ -31,7 +31,9 @@ def main():
         print("Error : The resume folder to be specified as command line argument")
         sys.exit(-1)
     foldername = str(sys.argv[1])
-    files = find_ext(foldername, ".pdf")
+    pdf_files = find_ext(foldername, ".pdf")
+    docx_files = find_ext(foldername, ".docx")
+    files = pdf_files + docx_files
     counter = 0
     for file in files:
         counter += 1

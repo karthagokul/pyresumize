@@ -3,6 +3,7 @@ from pdfminer.pdfinterp import PDFPageInterpreter
 from pdfminer.pdfinterp import PDFResourceManager
 from pdfminer.layout import LAParams
 from pdfminer.pdfpage import PDFPage
+import docx
 import io
 import spacy
 from pyresumize.utilities import Utilities
@@ -18,6 +19,11 @@ from pyresumize.employment_module import EmployerStandardEngine
 
 config_folder = "data"
 import nltk
+import logging
+
+logging.basicConfig(
+    level=logging.WARNING, filename="pyresumize.log", filemode="w", format="%(name)s - %(levelname)s - %(message)s"
+)
 
 # TODO , See if this need to be done in another place, performance improvements.
 nltk.download("stopwords")
@@ -85,17 +91,17 @@ class ResumeEngine:
         json_data["employers"] = self.candidate.employers
         return json_data
 
-    def check_file_sanity(self, file_path):
-        """
-        Utility function to check if the file given is valid
-        """
-        return self.__extract_text_from_pdf(file_path)
-
     def process_resume(self, file_path):
         """
         The Worker API !
         """
-        resume_data = self.__extract_text_from_pdf(file_path)
+        resume_data = None
+        if file_path.endswith(".pdf"):
+            resume_data = self.__extract_text_from_pdf(file_path)
+        elif file_path.endswith(".docx"):
+            resume_data = self.__extract_text_from_docx(file_path)
+        else:
+            return util.error_handler("File %s is not supported" % (file_path))
         if resume_data is None:
             util = Utilities()
             return util.error_handler("File %s Can not be opened" % (file_path))
@@ -109,6 +115,11 @@ class ResumeEngine:
         data = self.__generate_json()
         # Check if file is a pdf / doc and process accordingly.
         return data
+
+    def __extract_text_from_docx(self, docx_path):
+        document = docx.Document(docx_path)
+        doc_text = "\n\n".join(paragraph.text for paragraph in document.paragraphs)
+        return doc_text
 
     def __extract_text_from_pdf(self, pdf_path):
         """Get All text from PDF"""
@@ -125,8 +136,9 @@ class ResumeEngine:
                     text += fake_file_handle.getvalue()
                     fake_file_handle.close()
         except:
-            # print("Unable to Process file %s"%pdf_path)
             # Any parsing failure we handle here .
+            logging.critical("The File [%s] can not be processed" % pdf_path)
+            # Call the Utils.Error handler here ,later stage
             return None
 
         return text

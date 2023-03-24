@@ -8,7 +8,7 @@
 # Introduction
   
 
-pyresumize is a python module to extract useful information from resume and generate a json string out of it. Currently it supports only pdf file as input .
+pyresumize is a python module to extract useful information from resume and generate a json string out of it. Currently it supports only pdf,docx files as input .
 
 
 ### Todo
@@ -76,7 +76,7 @@ The ResumeEngine class has below member functions and with one of these you can 
 
 ## Usage  
 
-https://pypi.org/project/pyresumize/ . The module can be install using
+https://pypi.org/project/pyresumize/ . The module can be installed using
 
 
     pip install pyresumize

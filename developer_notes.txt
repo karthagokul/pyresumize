@@ -4,10 +4,9 @@
 To Run the unit tests
 pytest tests
 
+#Build and upload
 python -m build
-
 twine upload -r pyresumize dist\* --config-file "C:\Users\Gokul Kartha\.pypirc" --repository pypi
-
 
 ## generate class diagram
 pyreverse -o png -p pyresumize src\pyresumize

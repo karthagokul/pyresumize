@@ -4,6 +4,7 @@ import spacy
 from glob import glob
 from pyresumize.interfaces import EmployerBaseInterface
 from pyresumize.utilities import Utilities
+import logging
 
 
 class EmployerStandardEngine(EmployerBaseInterface):
@@ -20,7 +21,7 @@ class EmployerStandardEngine(EmployerBaseInterface):
         utils = Utilities()
         employers = utils.generate_keywords_from_csv_files(employ_input_folder)
         employers = list(map(lambda x: str(x).capitalize(), employers))  # Normalising the Strings to Lower
-        # print("found %d employers "%len(employers))
+        logging.info("found %d employers " % len(employers))
 
         candidate_employment = []
 
