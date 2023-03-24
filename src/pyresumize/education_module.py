@@ -10,37 +10,18 @@ from pyresumize.interfaces import EducationBaseInterface
 from pyresumize.utilities import Utilities
 
 
-EDUCATION = [
-    "BE",
-    "B.E.",
-    "B.E",
-    "BS",
-    "B.S",
-    "ME",
-    "M.E",
-    "M.E.",
-    "MS",
-    "M.S",
-    "BTECH",
-    "B.TECH",
-    "M.TECH",
-    "MTECH",
-    "SSC",
-    "HSC",
-    "CBSE",
-    "ICSE",
-    "X",
-    "XII",
-]
-STOPWORDS = set(stopwords.words("english"))
-
 """
 Below Modules are standard implementations of the respective interfaces
 The developer of the library can extend the functionality as in needed by pluggin in a custom module
 """
+STOPWORDS = set(stopwords.words("english"))
 
 
 class EducationStandardEngine(EducationBaseInterface):
+    """
+    Engine to process the education details from Resume
+    """
+
     def __init__(self, nlp, config_folder) -> None:
         super().__init__(config_folder)
         self.nlp = nlp
@@ -51,13 +32,16 @@ class EducationStandardEngine(EducationBaseInterface):
         _text = [sent.text.strip() for sent in _text.sents]
 
         degrees = {}
-
+        education_input_folder = os.path.join(self.config_folder, "education")
+        utils = Utilities()
+        education_input = utils.generate_keywords_from_csv_files(education_input_folder)
+        education_input = list(map(lambda x: str(x).lower(), education_input))
         # Lets search for Single words like BE
         for index, text in enumerate(_text):
             for tex in text.split():
                 # Replace all special symbols
                 tex = re.sub(r"[?|$|.|!|,]", r"", tex)
-                if tex.upper() in EDUCATION and tex not in STOPWORDS:
+                if tex.lower() in education_input and tex not in STOPWORDS:
                     if len(_text) > index + 1:
                         degrees[tex] = text + _text[index + 1]
         # Now Lets search Longer word like Bachelor of Technology

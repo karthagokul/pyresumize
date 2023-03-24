@@ -7,6 +7,11 @@ from pyresumize.interfaces import PhoneBaseInterface, NameBaseInterface, EmailBa
 
 
 class PhoneStandardEngine(PhoneBaseInterface):
+    """
+    Engine which uses a Regular expression to parse the phone number
+    TODO: Currently it supports only international formats, Need improvement with better filterations
+    """
+
     def __init__(self, nlp, config_folder) -> None:
         super().__init__(config_folder)
         self.nlp = nlp
@@ -18,6 +23,11 @@ class PhoneStandardEngine(PhoneBaseInterface):
 
 
 class NameStandardEngine(NameBaseInterface):
+    """
+    Engine to get the Name of the candidate
+    TODO : Only supports Two worded names , If there are three words , it is not supported
+    """
+
     def __init__(self, nlp, config_folder) -> None:
         super().__init__(config_folder)
         self.matcher = Matcher(nlp.vocab)
@@ -39,6 +49,10 @@ class NameStandardEngine(NameBaseInterface):
 
 
 class EmailStandardEngine(EmailBaseInterface):
+    """
+    Process the email addresses from a Resume
+    """
+
     def __init__(self, nlp, config_folder) -> None:
         super().__init__(config_folder)
         self.nlp = nlp

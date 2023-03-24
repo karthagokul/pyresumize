@@ -19,7 +19,7 @@ class EmployerStandardEngine(EmployerBaseInterface):
         employ_input_folder = os.path.join(self.config_folder, "employers")
         utils = Utilities()
         employers = utils.generate_keywords_from_csv_files(employ_input_folder)
-        employers = list(map(lambda x: str(x).lower(), employers))  # Normalising the Strings to Lower
+        employers = list(map(lambda x: str(x).capitalize(), employers))  # Normalising the Strings to Lower
         # print("found %d employers "%len(employers))
 
         candidate_employment = []
@@ -28,14 +28,14 @@ class EmployerStandardEngine(EmployerBaseInterface):
 
         # Lets look at the companies with single word
         for token in tokens:
-            token = token.lower()
+            token = token.capitalize()
             if token in employers:
                 # if token not in candidate_employment:
                 candidate_employment.append(token)
 
         # for the Combined names  such as Operating Systems
         for token in nlp_text.noun_chunks:
-            token = token.text.lower().strip()
+            token = token.text.capitalize().strip()
             if token in employers:
                 candidate_employment.append(token)
 
