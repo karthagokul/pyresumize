@@ -1,1 +1,0 @@
-python -m spacy train config.cfg --output ..\output --paths.train pyresumize.spacy --paths.dev pyresumize.spacy

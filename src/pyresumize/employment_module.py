@@ -9,17 +9,12 @@ from pyresumize.utilities import Utilities
 class EmployerStandardEngine(EmployerBaseInterface):
     def __init__(self, nlp, config_folder) -> None:
         super().__init__(config_folder)
-        # self.nlp = nlp
-
-        # Override the nlp with custom if needed
-        self.nlp = spacy.load(R"./output/model-best")
+        self.nlp = nlp
 
     def process(self, employment_text):
         """does nothing"""
         candidate_employment = []
         nlp_text = self.nlp(employment_text)
-        doc = self.nlp(employment_text)
-
         tokens = [token.text for token in nlp_text if not token.is_stop]
         employ_input_folder = os.path.join(self.config_folder, "employers")
         utils = Utilities()
