@@ -101,6 +101,7 @@ class ResumeEngine:
         elif file_path.endswith(".docx"):
             resume_data = self.__extract_text_from_docx(file_path)
         else:
+            util =Utilities()
             return util.error_handler("File %s is not supported" % (file_path))
         if resume_data is None:
             util = Utilities()
