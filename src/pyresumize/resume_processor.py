@@ -52,7 +52,7 @@ class ResumeEngine:
     def set_name_engine(self, engine):
         self.name_engine = engine
 
-    def set_name_engine(self, engine):
+    def set_phone_engine(self, engine):
         self.phone_engine = engine
 
     def set_email_engine(self, engine):
@@ -97,6 +97,7 @@ class ResumeEngine:
         self.candidate.personal_details["phone"] = self.phone_engine.process(resume_data)
         self.candidate.personal_details["email"] = self.email_engine.process(resume_data)
         self.candidate.education = self.education_engine.process(resume_data)
+        self.candidate.employers = self.employer_engine.process(resume_data)
 
         data = self.__generate_json()
         # Check if file is a pdf / doc and process accordingly.
