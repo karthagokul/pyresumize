@@ -1,8 +1,5 @@
 import re
 from spacy.matcher import Matcher
-from nltk.corpus import stopwords
-from os import path
-from glob import glob
 from pyresumize.interfaces import PhoneBaseInterface, NameBaseInterface, EmailBaseInterface
 
 
@@ -42,7 +39,7 @@ class NameStandardEngine(NameBaseInterface):
 
         matches = self.matcher(nlp_text)
 
-        for match_id, start, end in matches:
+        for _match_id, start, end in matches:  # pylint: disable=unused-variable
             span = nlp_text[start:end]
             return span.text
         return ""
@@ -61,7 +58,7 @@ class EmailStandardEngine(EmailBaseInterface):
     def process(self, extracted_text):
         result = ""
         # Regex for finding email
-        email = re.findall("([^@|\s]+@[^@]+\.[^@|\s]+)", extracted_text)
+        email = re.findall(r"([^@|\s]+@[^@]+\.[^@|\s]+)", extracted_text)
         if email:
             try:
                 result = email[0].split()[0].strip(";")
