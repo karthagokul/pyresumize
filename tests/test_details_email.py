@@ -2,7 +2,14 @@ import sys
 
 sys.path.append("src")
 import spacy
-from pyresumize.modules import EmailStandardEngine
+from pyresumize.basic_details_module import (
+    NameStandardEngine,
+    PhoneStandardEngine,
+    EmailStandardEngine,
+)
+from pyresumize.education_module import EducationStandardEngine
+from pyresumize.skills_module import SkillStandardEngine
+from pyresumize.employment_module import EmployerStandardEngine
 
 from unittest import TestCase
 
@@ -13,7 +20,7 @@ class Emailesting(TestCase):
 
     def test_email(self):
         self.nlp = spacy.load("en_core_web_sm")
-        engine = EmailStandardEngine(self.nlp)
+        engine = EmailStandardEngine(self.nlp, "data")
         # Since its a private method
         # Invalid Emails
         result = engine.process("@karthakul")

@@ -5,18 +5,23 @@ from pdfminer.layout import LAParams
 from pdfminer.pdfpage import PDFPage
 import io
 import spacy
-from spacy.matcher import Matcher
-import os
 from pyresumize.utilities import Utilities
-import pyresumize.modules as modules
-from pyresumize.modules import (
-    SkillStandardEngine,
+import pyresumize.education_module as education_module
+from pyresumize.basic_details_module import (
     NameStandardEngine,
     PhoneStandardEngine,
     EmailStandardEngine,
-    EducationStandardEngine,
-    EmployerStandardEngine,
 )
+from pyresumize.education_module import EducationStandardEngine
+from pyresumize.skills_module import SkillStandardEngine
+from pyresumize.employment_module import EmployerStandardEngine
+
+config_folder = "data"
+import nltk
+
+# TODO , See if this need to be done in another place, performance improvements.
+nltk.download("stopwords")
+# TODO End
 
 
 class Candidate:
@@ -37,14 +42,15 @@ class ResumeEngine:
     """The GodFather Class with the API interface"""
 
     def __init__(self) -> None:
-        self.nlp = spacy.load("en_core_web_sm")
+        # move this outside , loading a set takes time
+        self.nlp = spacy.load("en_core_web_lg")
         self.candidate = Candidate()
-        self.name_engine = NameStandardEngine(self.nlp)
-        self.skills_engine = SkillStandardEngine(self.nlp)
-        self.phone_engine = PhoneStandardEngine(self.nlp)
-        self.email_engine = EmailStandardEngine(self.nlp)
-        self.education_engine = EducationStandardEngine(self.nlp)
-        self.employer_engine = EmployerStandardEngine(self.nlp)
+        self.name_engine = NameStandardEngine(self.nlp, config_folder)
+        self.skills_engine = SkillStandardEngine(self.nlp, config_folder)
+        self.phone_engine = PhoneStandardEngine(self.nlp, config_folder)
+        self.email_engine = EmailStandardEngine(self.nlp, config_folder)
+        self.education_engine = EducationStandardEngine(self.nlp, config_folder)
+        self.employer_engine = EmployerStandardEngine(self.nlp, config_folder)
 
     def set_skills_engine(self, engine):
         self.skills_engine = engine
@@ -65,7 +71,8 @@ class ResumeEngine:
         self.employer_engine = engine
 
     def set_custom_keywords_folder(self, folder_name):
-        modules.set_config_folder(folder_name)
+        global config_folder
+        config_folder = folder_name
 
     def __generate_json(self):
         """
