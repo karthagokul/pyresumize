@@ -22,8 +22,6 @@ class EmployerStandardEngine(EmployerBaseInterface):
 
         candidate_employment = []
 
-        tokens = [token.text for token in nlp_text if not token.is_stop]
-
         # Lets look at the companies with single word
         for token in tokens:
             token = token.capitalize()
