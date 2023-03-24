@@ -1,11 +1,6 @@
 import os
 import re
-import spacy
-from spacy.matcher import Matcher
-import pandas as pdas
 from nltk.corpus import stopwords
-from os import path
-from glob import glob
 from pyresumize.interfaces import EducationBaseInterface
 from pyresumize.utilities import Utilities
 
@@ -67,7 +62,7 @@ class EducationStandardEngine(EducationBaseInterface):
         """ """
         nlp_text = self.nlp(resume_text)
 
-        tokens = [token.text for token in nlp_text if not token.is_stop]
+        # tokens = [token.text for token in nlp_text if not token.is_stop]
         universities_input_folder = os.path.join(self.config_folder, "universities")
         utils = Utilities()
         universities = utils.generate_keywords_from_csv_files(universities_input_folder)

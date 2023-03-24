@@ -1,13 +1,14 @@
+import docx
+import io
+import spacy
+import nltk
+import logging
 from pdfminer.converter import TextConverter
 from pdfminer.pdfinterp import PDFPageInterpreter
 from pdfminer.pdfinterp import PDFResourceManager
 from pdfminer.layout import LAParams
 from pdfminer.pdfpage import PDFPage
-import docx
-import io
-import spacy
 from pyresumize.utilities import Utilities
-import pyresumize.education_module as education_module
 from pyresumize.basic_details_module import (
     NameStandardEngine,
     PhoneStandardEngine,
@@ -18,8 +19,6 @@ from pyresumize.skills_module import SkillStandardEngine
 from pyresumize.employment_module import EmployerStandardEngine
 
 config_folder = "data"
-import nltk
-import logging
 
 logging.basicConfig(
     level=logging.WARNING, filename="pyresumize.log", filemode="w", format="%(name)s - %(levelname)s - %(message)s"
@@ -101,7 +100,7 @@ class ResumeEngine:
         elif file_path.endswith(".docx"):
             resume_data = self.__extract_text_from_docx(file_path)
         else:
-            util =Utilities()
+            util = Utilities()
             return util.error_handler("File %s is not supported" % (file_path))
         if resume_data is None:
             util = Utilities()

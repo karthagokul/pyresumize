@@ -15,3 +15,6 @@ pyreverse -o png -p pyresumize src\pyresumize
 # Lets download programtically if needed when deploy as service
 # import spacy.cli
 # spacy.cli.download("en_core_web_lg")
+
+#Static runs
+flake8 src --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics

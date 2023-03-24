@@ -1,7 +1,4 @@
 import os
-import re
-import spacy
-from glob import glob
 from pyresumize.interfaces import SkillBaseInterface
 from pyresumize.utilities import Utilities
 
