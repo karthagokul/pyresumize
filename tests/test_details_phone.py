@@ -3,7 +3,14 @@ import spacy
 
 sys.path.append("src")
 
-from pyresumize.modules import PhoneStandardEngine
+from pyresumize.basic_details_module import (
+    NameStandardEngine,
+    PhoneStandardEngine,
+    EmailStandardEngine,
+)
+from pyresumize.education_module import EducationStandardEngine
+from pyresumize.skills_module import SkillStandardEngine
+from pyresumize.employment_module import EmployerStandardEngine
 
 from unittest import TestCase
 
@@ -14,13 +21,13 @@ class Phoneesting(TestCase):
 
     def test_phone(self):
         self.nlp = spacy.load("en_core_web_sm")
-        engine = PhoneStandardEngine(self.nlp)
+        engine = PhoneStandardEngine(self.nlp, "data")
 
         # two numbers case
         result = engine.process(
             "My Phone number is +919562099376 , can you give me a call? I have another number too +919562099377"
         )
-        self.assertEqual("+919562099376,+919562099377", result)
+        self.assertEqual("+919562099377,+919562099376", result)
 
         # One number case
         result = engine.process("+919562099376")

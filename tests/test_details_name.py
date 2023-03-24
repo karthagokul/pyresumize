@@ -2,7 +2,15 @@ import sys
 
 sys.path.append("src")
 import spacy
-from pyresumize.modules import NameStandardEngine
+from pyresumize.basic_details_module import (
+    NameStandardEngine,
+    PhoneStandardEngine,
+    EmailStandardEngine,
+)
+from pyresumize.education_module import EducationStandardEngine
+from pyresumize.skills_module import SkillStandardEngine
+from pyresumize.employment_module import EmployerStandardEngine
+
 from unittest import TestCase
 
 
@@ -12,7 +20,7 @@ class Nameesting(TestCase):
 
     def test_name(self):
         self.nlp = spacy.load("en_core_web_sm")
-        engine = NameStandardEngine(self.nlp)
+        engine = NameStandardEngine(self.nlp, "data")
         # Since its a private method
         result = engine.process("I am Working")
         self.assertEqual("", result)
