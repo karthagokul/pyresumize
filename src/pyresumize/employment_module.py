@@ -45,4 +45,6 @@ class EmployerStandardEngine(EmployerBaseInterface):
                 candidate_employment.append(ent.text.lower())
                 # print(ent.text)
                 # print(ent.label_)
+        #Removes Duplicate
+        candidate_employment=set(candidate_employment)
         return candidate_employment
