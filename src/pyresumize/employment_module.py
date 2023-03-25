@@ -42,7 +42,7 @@ class EmployerStandardEngine(EmployerBaseInterface):
         candidate_employment = []
         for ent in doc.ents:
             if ent.label_ == "EMPLOYER":
-                candidate_employment.append(ent.text.capitalize())
+                candidate_employment.append(ent.text.lower())
                 # print(ent.text)
                 # print(ent.label_)
         return candidate_employment
