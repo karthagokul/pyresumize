@@ -93,7 +93,7 @@ class ResumeEngine:
         The Worker API !
         """
         resume_data = self.text_factory.process(file_path)
-        if resume_data == None:
+        if resume_data is None:
             util = Utilities()
             return util.error_handler("File %s is not supported" % (file_path))
 

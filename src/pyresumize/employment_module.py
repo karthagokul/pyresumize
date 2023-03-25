@@ -1,10 +1,7 @@
 import os
-import re
 import spacy
-from glob import glob
 from pyresumize.interfaces import EmployerBaseInterface
 from pyresumize.utilities import Utilities
-import logging
 
 
 class EmployerStandardEngine(EmployerBaseInterface):
