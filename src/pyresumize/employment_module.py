@@ -10,10 +10,8 @@ import logging
 class EmployerStandardEngine(EmployerBaseInterface):
     def __init__(self, nlp, config_folder) -> None:
         super().__init__(config_folder)
+        # We overrides the default nlp given
         self.nlp = spacy.load("en_core_web_sm", exclude=["entity_ruler"])
-
-        # Override the nlp with custom if needed
-        # self.nlp = spacy.load(R"./output/model-best")
         self.__generate_employers()
 
     def __generate_employers(self):
@@ -45,6 +43,6 @@ class EmployerStandardEngine(EmployerBaseInterface):
                 candidate_employment.append(ent.text.lower())
                 # print(ent.text)
                 # print(ent.label_)
-        #Removes Duplicate
-        candidate_employment=set(candidate_employment)
+        # Removes Duplicate
+        candidate_employment = set(candidate_employment)
         return candidate_employment

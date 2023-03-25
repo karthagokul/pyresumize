@@ -27,7 +27,13 @@ The Skills , Employers and Education is given as .csv inputs to the engine and y
 Log Integration
 custom model
 
-### Design  
+### Design
+
+## Class Diagram
+![Alt text](https://github.com/karthagokul/pyresumize/blob/main/classes_pyresumize.png?raw=true  "Class Diagram")
+
+## Package Diagram
+![Alt text](https://github.com/karthagokul/pyresumize/blob/main/packages_pyresumize.png?raw=true  "Packages")
 
 I have changed the Design in such a way that the developers can create own parsing rules and set those to the Parser to bring in flexibility. 
 
@@ -64,6 +70,7 @@ One of these interfaces can be implemented like below .
         #Call a remote API and pass the text info
         return list[]
 
+Currently the Engine supports PDF and DOCX File extensions , By implementing AbstractFileProcessor you can create your own parser to insert it to the engine via the method add_custom_text_processor.
   
 The ResumeEngine class has below member functions and with one of these you can apply your custom engine
 
@@ -85,7 +92,7 @@ https://pypi.org/project/pyresumize/ . The module can be installed using
 Then do the below
 
 
-    python -m spacy download en_core_web_sm    
+    python -m spacy download en_core_web_lg    
     python -m nltk.downloader words    
     python -m nltk.downloader stopwords    
     from pyresumize import ResumeEngine    
