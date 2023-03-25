@@ -34,9 +34,7 @@ class NameStandardEngine(NameBaseInterface):
         nlp_text = self.nlp(extracted_text)
         # Identify the Names (Nouns)
         pattern = [{"POS": "PROPN"}, {"POS": "PROPN"}]
-
         self.matcher.add("NAME", [pattern])
-
         matches = self.matcher(nlp_text)
 
         for _match_id, start, end in matches:  # pylint: disable=unused-variable

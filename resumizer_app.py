@@ -2,7 +2,7 @@ import sys
 import os
 from os import path
 from glob import glob
-import signal
+import json
 
 sys.path.append("src")
 from pyresumize.resume_processor import ResumeEngine

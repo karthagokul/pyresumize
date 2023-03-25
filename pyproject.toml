@@ -27,7 +27,8 @@ dependencies = [
     "python.docx",
     "pandas==1.5.3",
     "nltk==3.8.1",
-    "click"
+    "click",
+    "wheel"
 ]
 [project.optional-dependencies]
 spark = [
