@@ -3,7 +3,7 @@
 
   
 
-![](https://github.com/karthagokul/pyresumize/blob/main/logo.png?raw=true | width=320)
+![](https://github.com/karthagokul/pyresumize/blob/main/logo.png?raw=true)
 
 # Introduction
   
