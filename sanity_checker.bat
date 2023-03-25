@@ -3,4 +3,5 @@ pytest tests
 pyreverse -o png -p pyresumize src\pyresumize
 flake8 src --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
 black .
+git log --format="%C(auto) %h %d %s" > changelog.md
 git status
