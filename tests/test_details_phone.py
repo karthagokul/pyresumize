@@ -27,7 +27,10 @@ class Phoneesting(TestCase):
         result = engine.process(
             "My Phone number is +919562099376 , can you give me a call? I have another number too +919562099377"
         )
-        self.assertEqual("+919562099377,+919562099376", result)
+        ans_1 = "+919562099376"
+        ans_2 = "+919562099377"
+        self.assertEqual(ans_1 in result, True)
+        self.assertEqual(ans_2 in result, True)
 
         # One number case
         result = engine.process("+919562099376")

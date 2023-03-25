@@ -50,11 +50,11 @@ class DocXFileProcessor(AbstractFileProcessor):
         doc_text = None
         try:
             document = Document(filename)
-        except ValueError as ve:
+        except ValueError:
             doc_text = None
         except PackageNotFoundError:
             doc_text = None
-        except Exception as e:
+        except Exception:
             doc_text = None
         else:
             doc_text = "\n\n".join(paragraph.text for paragraph in document.paragraphs)
