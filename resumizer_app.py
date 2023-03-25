@@ -5,6 +5,8 @@ from glob import glob
 import json
 
 sys.path.append("src")
+from pyresumize.skills_module import SkillCustomNEREngine
+from pyresumize.employment_module import EmployerCustomNEREngine
 from pyresumize.resume_processor import ResumeEngine
 
 # global instance of parser, Since we use Spacy models , this helps to reduce load time
@@ -26,10 +28,18 @@ def find_ext(dr, ext):
 
 
 def main():
-    """find the files in a given folder with extension pdf and process those"""
     if len(sys.argv) < 2:
         print("Error : The resume folder to be specified as command line argument")
         sys.exit(-1)
+
+    global r_parer
+    print("Setting up the Environment , Please wait...")
+
+    skills_e = SkillCustomNEREngine("data")
+    employer_e = EmployerCustomNEREngine("data")
+    r_parser.set_skills_engine(skills_e)
+    r_parser.set_employer_engine(employer_e)
+
     foldername = str(sys.argv[1])
     pdf_files = find_ext(foldername, ".pdf")
     docx_files = find_ext(foldername, ".docx")

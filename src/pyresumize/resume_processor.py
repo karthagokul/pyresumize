@@ -1,5 +1,4 @@
 import spacy
-import nltk
 import logging
 import json
 
@@ -19,10 +18,6 @@ config_folder = "data"
 logging.basicConfig(
     level=logging.WARNING, filename="pyresumize.log", filemode="w", format="%(name)s - %(levelname)s - %(message)s"
 )
-
-# TODO , See if this need to be done in another place, performance improvements.
-nltk.download("stopwords")
-# TODO End
 
 
 class Candidate:
