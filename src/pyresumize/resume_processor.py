@@ -3,6 +3,7 @@ import io
 import spacy
 import nltk
 import logging
+import json
 from pdfminer.converter import TextConverter
 from pdfminer.pdfinterp import PDFPageInterpreter
 from pdfminer.pdfinterp import PDFResourceManager
@@ -34,9 +35,6 @@ class Candidate:
     The Extracted data is encapsulated in this class
     """
 
-    name = ""
-    phone = ""
-    email = ""
     personal_details = {}
     skills = []
     education = {}
@@ -48,7 +46,7 @@ class ResumeEngine:
 
     def __init__(self) -> None:
         # move this outside , loading a set takes time
-        self.nlp = spacy.load("en_core_web_lg")
+        self.nlp = spacy.load("en_core_web_lg")  # Must have for names
         self.candidate = Candidate()
         self.name_engine = NameStandardEngine(self.nlp, config_folder)
         self.skills_engine = SkillStandardEngine(self.nlp, config_folder)
@@ -85,10 +83,10 @@ class ResumeEngine:
         """
         json_data = {}
         json_data["basic_details"] = self.candidate.personal_details
-        json_data["skills"] = self.candidate.skills
+        json_data["skills"] = ",".join(self.candidate.skills)
         json_data["education"] = self.candidate.education
-        json_data["employers"] = self.candidate.employers
-        return json_data
+        json_data["employers"] = ",".join(self.candidate.employers)
+        return json.dumps(json_data)
 
     def process_resume(self, file_path):
         """
@@ -105,16 +103,14 @@ class ResumeEngine:
         if resume_data is None:
             util = Utilities()
             return util.error_handler("File %s Can not be opened" % (file_path))
-        self.candidate.name = self.name_engine.process(resume_data)
         self.candidate.skills = self.skills_engine.process(resume_data)
+        self.candidate.personal_details["name"] = self.name_engine.process(resume_data)
         self.candidate.personal_details["phone"] = self.phone_engine.process(resume_data)
         self.candidate.personal_details["email"] = self.email_engine.process(resume_data)
         self.candidate.education = self.education_engine.process(resume_data)
         self.candidate.employers = self.employer_engine.process(resume_data)
 
-        data = self.__generate_json()
-        # Check if file is a pdf / doc and process accordingly.
-        return data
+        return self.__generate_json()
 
     def __extract_text_from_docx(self, docx_path):
         document = docx.Document(docx_path)

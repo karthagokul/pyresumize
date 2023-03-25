@@ -1,1 +1,2 @@
 python -m spacy train config.cfg --output ..\output\pyresumize_employers --paths.train pyresumize_employers.spacy --paths.dev pyresumize_employers.spacy
+python -m spacy evaluate ..\output\pyresumize_employers\model-best pyresumize_employers.spacy

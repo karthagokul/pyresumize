@@ -7,7 +7,7 @@ sys.path.append("../src")
 from pyresumize.utilities import Utilities
 
 nlp = spacy.blank("en")  # For new model creation
-nlp = spacy.load("en_core_web_sm")  # To train the existing model with new parameters
+# nlp = spacy.load("en_core_web_sm")  # To train the existing model with new parameters
 
 
 class BaseTrainer:
@@ -39,14 +39,18 @@ class BaseTrainer:
             doc = self.nlp.make_doc(text)  # create doc object from text
             ents = []
             for start, end, label in annot["entities"]:  # add character indexes
+                # print(start)
+                # print(end)
                 span = doc.char_span(start, end, label=label, alignment_mode="contract")
                 if span is None:
                     print("Skipping entity")
                 else:
                     ents.append(span)
+                    # print("Appending")
+                    # print(span)
+                    # print(label)
             doc.ents = ents  # label the text with the ents
             db.add(doc)
-
         db.to_disk(filename)
 
 

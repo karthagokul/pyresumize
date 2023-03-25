@@ -1,19 +1,9 @@
 import spacy
 
-nlp = spacy.load("../output/pyresumize_employers/model-best")
+nlp = spacy.load(R"../output/pyresumize_employers/model-best")  # load the drug pipeline
 
 
-def ent(doc):
-    global nlp
-    return [x for x in (nlp(doc)).ents if x.label_ == "ORG"]
-
-
-text = "Gokul Kartha is an Indian"
-doc = nlp(text)
-for x in (nlp(doc)).ents:
-    # if x.label_=="ORG":
-    print(x.text)
-    print(x.label_)
-
-# company_names = ent(doc)
-# print(company_names)
+doc = nlp("India is a beautiful country , Indians are brothers and sisters .Gokul Work in Emudhra")
+for ent in doc.ents:
+    print(ent.text)
+    print(ent.label_)
