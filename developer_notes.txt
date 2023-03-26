@@ -8,6 +8,12 @@ pytest tests
 python -m build
 twine upload -r pyresumize dist\* --config-file "C:\Users\Gokul Kartha\.pypirc" --repository pypi
 
+docker build -t "pyresumize" .
+docker run pyresumize
+
+and ensure the versions
+
+
 ## generate class diagram
 pyreverse -o png -p pyresumize src\pyresumize
 
