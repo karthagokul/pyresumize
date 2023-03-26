@@ -1,5 +1,12 @@
- bce68a5  (HEAD -> beta, origin/beta) Static Code fixes, cleaning up
+ 06dc5c4  (HEAD -> beta, origin/beta) Dockerfile to check the module sanity after release
+ 58227d8  First version of Dockerfile for testing
+ 69bdfb7  (origin/main, origin/HEAD, main) Update README.md
+ ba75ce9  Update README.md
+ 6024ad3  (tag: 0.2.1) Rolling out 0.2.1  (#24)
+ c9b6b77  adding a changelog
+ bce68a5  Static Code fixes, cleaning up
  ab1e1b9  Releasing 0.2.0 Version
+ ded46cc  Design Changes (#23)
  b944e82  Fix
  26cf57c  Creating a Text Processing Factory and integrated
  397c807  Fixing the data set
@@ -8,7 +15,7 @@
  66bf264  Fixing the data set
  2c2c9fd  New Design has been introduced with Custom Entity Model for Employment Parsing
  7df9ba4  Trainer Module
- 82872b9  (tag: 0.1.9, origin/main, origin/HEAD, main) Fixed all the static code warnings (#22)
+ 82872b9  (tag: 0.1.9) Fixed all the static code warnings (#22)
  d89b3f1  Fixed all the static code warnings
  ce52670  Merge pull request #21 from karthagokul/beta
  66f0711  0.1.9 : Fixes in the static code analysis
