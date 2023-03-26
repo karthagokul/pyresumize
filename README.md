@@ -19,13 +19,9 @@ pyresumize is a python module to extract useful information from resume and gene
 * Bug Fixes
 * Custom configuration of input data
 
-### Note
+#### Notes
 
 The Skills , Employers and Education is given as .csv inputs to the engine and you can see a reference implementation in the data folder.
-
-### Todo
-Log Integration
-custom model
 
 ### Design
 
@@ -41,11 +37,11 @@ Currently we have the below interfaces exposed and the developers can override t
 
 - EmployerBaseInterface:
 
-Searches for company information in the resume and identifies the employers
+Searches for company information in the resume and identifies the employment information from resume. The builtin module uses NER model from a set of 1500+ employers . I already have a plan to list all the employers based on countries (Future Releases)
 
 - EducationBaseInterface
 
-Process Education Details together with universities .The results are stored in a map
+Process Education Details together with universities .Similarly the data is very primitive , I need to update the input csv files based on countries(future releases)
 
 - EmailBaseInterface
 
@@ -61,9 +57,10 @@ Proces the Name of the candidate .
 
 - SkillBaseInterface:
 
-Process the skills section . returns a list of identified skills in a resume.
+Process the skills section . returns a list of identified skills in a resume. I used a linked in scrapped input for this module.
 
-One of these interfaces can be implemented like below . 
+Sometimes you will be in a need to extend there interfaces , Then create a class like below to have custom parsing.
+
 
     class RemoteCompaniesChecker (EmployerBaseInterface):
         def process(self,resumetext):
@@ -79,7 +76,7 @@ The ResumeEngine class has below member functions and with one of these you can 
     set_education_engine(self, engine):    
     set_employer_engine(self, engine):
 
-Currently the Engine supports PDF and DOCX File extensions . Incase if you want to use a different parsing mechanism for a particular type of file, you can extend AbstractFileProcessor and use add_custom_text_processor method to register your text processor.
+Currently the Engine supports PDF and DOCX File extensions . Incase if you want to use a different parsing mechanism for a particular type of file, you can extend AbstractFileProcessor and use add_custom_text_processor method to register your own text processing features.
 
 ## Usage  
 
