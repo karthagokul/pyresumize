@@ -22,11 +22,11 @@ classifiers = [
 requires-python = ">=3.7"
 dynamic = ["version"]
 dependencies = [
-    "spacy==3.5.1",
-    "pdfminer.six==20221105",
+    "spacy",
+    "pdfminer.six",
     "python.docx",
-    "pandas==1.5.3",
-    "nltk==3.8.1",
+    "pandas",
+    "nltk",
     "click",
     "wheel"
 ]
